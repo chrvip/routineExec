@@ -1,0 +1,139 @@
+/**
+ * Welcome to Pebble.js!
+ *
+ * This is where you write your app.
+ */
+
+var UI = require('ui');
+var Vector2 = require('vector2');
+var main = new UI.Card({
+  title: 'routineExec',
+  icon: 'images/menu_icon.png',
+  subtitle: 'Hello World!',
+  body: 'Press any button.',
+  subtitleColor: 'indigo', // Named colors
+  bodyColor: 'blue' // Hex colors
+});
+
+main.show();
+
+main.on('click', 'up', function(e) {
+  /*
+  var menu = new UI.Menu({
+    sections: [{
+      items: [{
+        title: 'First List',
+        icon: 'images/menu_icon.png',
+        subtitle: 'morning'
+      }, {
+        title: 'Second Item',
+        subtitle: 'noon'
+      }, {
+        title: 'Third Item',
+        subtitle: 'evening'
+      }]
+    }]
+  }); */
+    var ajax = require('ajax');
+    console.log('a');
+    ajax(
+      {
+        url: 'http://chrsoft.cn/data?act=lists&username=chr',
+        type: 'json'
+      },
+      function(data, status, request) {
+        //var json=JSON.Parse(data);
+        var json=data;
+        
+        var menu = new UI.Menu();
+        for(var i=0;i<json.length;i++) {
+            menu.item(0,menu.items(0).length,{title:json[i].name,subtitle:'night'});
+        }
+        
+        
+        console.log('Quote of the day is: ' + json.length);
+        var card = new UI.Card();
+        card.title('A Card');
+        card.subtitle('Is a Window');
+        card.body(json.length);
+        card.show();
+      },
+      function(error, status, request) {
+        console.log('The ajax request failed: ' + error);
+      }
+    );
+
+  menu.on('select', function(e) {
+    console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
+    console.log('The item is titled "' + e.item.title + '"');
+    var actionIndex=e.itemIndex;
+    var actionName=e.item.title;
+    var text='get up :5 min\n' ;
+    text += 'morning question: 3.5 min ';
+    text += 'wash room: 5 min ';
+    text += 'push up: 3.5 min ';
+    var actions=new UI.Card();
+    actions.title((e.itemIndex+1).toString(10) + '.' + actionName);
+    actions.subtitleColor('indigo');
+    actions.bodyColor('blue');
+    actions.body(text);
+    actions.show();
+    
+    actions.on('click', 'select', function(e) {
+        console.log('create window "' + actionName + '"');
+        var timerCount = new UI.Window({
+            fullscreen: true,
+        });
+        var textfield = new UI.Text({
+        position: new Vector2(0, 65),
+        size: new Vector2(144, 0),
+        font: 'gothic-24-bold',
+        text: 'Text Anywhere!',
+        textAlign: 'center'
+        });
+        textfield.text(actionName);
+        timerCount.add(textfield);
+        timerCount.show();
+    });
+    });
+  menu.show();
+});
+
+main.on('click', 'select', function(e) {
+  var wind = new UI.Window({
+    fullscreen: true,
+  });
+  var textfield = new UI.Text({
+    position: new Vector2(0, 65),
+    size: new Vector2(144, 30),
+    font: 'gothic-24-bold',
+    text: 'Text Anywhere!',
+    textAlign: 'center'
+  });
+  wind.add(textfield);
+  wind.show();
+});
+
+main.on('click', 'down', function(e) {
+    var ajax = require('ajax');
+    console.log('a');
+    ajax(
+      {
+        url: 'http://chrsoft.cn/data?act=lists&username=chr',
+        type: 'json'
+      },
+      function(data, status, request) {
+        //var json=JSON.Parse(data);
+        var json=data;
+        console.log('Quote of the day is: ' + json.length);
+        var card = new UI.Card();
+        card.title('A Card');
+        card.subtitle('Is a Window');
+        card.body(json.length);
+        card.show();
+      },
+      function(error, status, request) {
+        console.log('The ajax request failed: ' + error);
+      }
+    );
+});
