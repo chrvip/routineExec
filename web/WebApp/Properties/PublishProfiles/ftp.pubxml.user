@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+您 Web 项目的发布/打包进程将使用此文件。您可以通过编辑此 MSBuild 文件
+来自定义该进程的行为。若要了解与此相关的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=208121。
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAJmj6U4yCqEqvToaD4M25zAAAAAACAAAAAAAQZgAAAAEAACAAAACmElUqsc5Bj4PjrGSfDE1frESlYAPPJM/Ambu000Jh2wAAAAAOgAAAAAIAACAAAABlg7ECS6c2MRtcZ1KO/HNubV+wcQNTA9PZrdKSnJPXFyAAAAActapIe0V0obGzr9XhKmRWwRub2E8gHF7qVNlq3X4w+kAAAAA+tzjTFGCzXoMJnAOzMdgDAmAQlB2eC+P+lLRJoYNjcGfwD/fnCHv7MHzaRqbtr0ocTcedFh+qbXr/1o8K34SV</EncryptedPassword>
+    <_PublishTargetUrl>ftp://qxw1193030281.my3w.com</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/App_global.asax.compiled">
+      <publishTime>11/16/2015 01:17:45</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.dll">
+      <publishTime>11/16/2015 01:17:45</publishTime>
+    </File>
+    <File Include="bin/Bxsoft.Encrypt.dll">
+      <publishTime>10/18/2015 11:32:06</publishTime>
+    </File>
+    <File Include="bin/Bxsoft.Utils.dll">
+      <publishTime>11/15/2015 16:21:43</publishTime>
+    </File>
+    <File Include="bin/Dapper.dll">
+      <publishTime>07/30/2014 12:32:02</publishTime>
+    </File>
+    <File Include="bin/WebApp.dll">
+      <publishTime>11/16/2015 01:15:55</publishTime>
+    </File>
+    <File Include="binbar.png">
+      <publishTime>11/16/2015 01:13:48</publishTime>
+    </File>
+    <File Include="config/appSettings.config">
+      <publishTime>11/15/2015 15:21:57</publishTime>
+    </File>
+    <File Include="config/connectionStrings.config">
+      <publishTime>11/15/2015 15:21:57</publishTime>
+    </File>
+    <File Include="data.ashx">
+      <publishTime>11/15/2015 15:58:04</publishTime>
+    </File>
+    <File Include="default.html">
+      <publishTime>11/16/2015 01:17:36</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>11/16/2015 01:17:44</publishTime>
+    </File>
+    <File Include="routineExec.pbw">
+      <publishTime>11/16/2015 01:04:39</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>11/15/2015 21:30:28</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
