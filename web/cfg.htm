@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>configuration</title>
+    <script type="text/javascript">
+
+        //default value for test
+        var DefaultLists = [
+                    {
+                        "id": 1, "name": "aaamorning", "showOrder": 1, "duration": 11,
+                        "Items": [
+                          { "id": 1, "listId": 1, "name": "dress up", "duration": 5, "showOrder": 1 },
+                          { "id": 2, "listId": 1, "name": "morning question", "duration": 3, "showOrder": 2 },
+                          { "id": 3, "listId": 1, "name": "shoes", "duration": 3, "showOrder": 3 }
+                        ]
+                    },
+                    {
+                        "id": 2, "name": "noon", "showOrder": 2, "duration": 65,
+                        "Items": [
+                          { "id": 4, "listId": 2, "name": "lunch", "duration": 30, "showOrder": 1 },
+                          { "id": 5, "listId": 2, "name": "chat", "duration": 15, "showOrder": 2 },
+                          { "id": 6, "listId": 2, "name": "rest", "duration": 15, "showOrder": 3 },
+                          { "id": 7, "listId": 2, "name": "coffee", "duration": 5, "showOrder": 4 }
+                        ]
+                    },
+                    {
+                        "id": 3, "name": "evening", "showOrder": 3, "duration": 65,
+                        "Items": [
+                          { "id": 8, "listId": 3, "name": "supper", "duration": 20, "showOrder": 1 },
+                          { "id": 9, "listId": 3, "name": "chat", "duration": 15, "showOrder": 2 },
+                          { "id": 10, "listId": 3, "name": "son", "duration": 30, "showOrder": 3 }
+                        ]
+                    },
+                    {
+                        "id": 4, "name": "night", "showOrder": 4, "duration": 63.5,
+                        "Items": [
+                          { "id": 11, "listId": 4, "name": "wash", "duration": 3.5, "showOrder": 1 },
+                          { "id": 12, "listId": 4, "name": "read", "duration": 60, "showOrder": 2 }
+                        ]
+                    }];
+        function parseURL(url) {
+            var a = document.createElement('a');
+            a.href = url;
+            return {
+                source: url,
+                protocol: a.protocol.replace(':', ''),
+                host: a.hostname,
+                port: a.port,
+                query: a.search,
+                params: (function () {
+                    var ret = {},
+                        seg = a.search.replace(/^\?/, '').split('&'),
+                        len = seg.length, i = 0, s;
+                    for (; i < len; i++) {
+                        if (!seg[i]) { continue; }
+                        s = seg[i].split('=');
+                        ret[s[0]] = decodeURIComponent(s[1]);
+                    }
+                    return ret;
+                })(),
+                file: (a.pathname.match(/\/([^\/?#]+)$/i) || [, ''])[1],
+                hash: a.hash.replace('#', ''),
+                path: a.pathname.replace(/^([^\/])/, '/$1'),
+                relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [, ''])[1],
+                segments: a.pathname.replace(/^\//, '').split('/')
+            };
+        }
+        function fillData() {
+            document.getElementById("lists").value = JSON.stringify(DefaultLists);
+        }
+
+        function saveData() {
+            // Close config page and return data
+            var url = 'pebblejs://close#' + encodeURIComponent(document.getElementById("lists").innerHTML);
+            var cfgValue = { "lists": document.getElementById("lists").value };
+            //url = return_to + encodeURIComponent(document.getElementById("lists").value);
+            url = return_to + encodeURIComponent(JSON.stringify(cfgValue));
+            //alert(url);
+            //document.location = return_to + encodeURIComponent(JSON.stringify(some_settings));
+            document.location = url;
+            //location.href = 'pebblejs://close#' + document.getElementById("lists").innerHTML;
+
+        }
+        function getQueryParam(variable, defaultValue) {
+            // Find all URL parameters
+            var query = location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                // If the query variable parameter is found, decode it to use and return it for use
+                if (pair[0] === variable) {
+                    return decodeURIComponent(pair[1]);
+                }
+            }
+            return defaultValue || false;
+        }
+
+        // Set the return URL depending on the runtime environment
+        var return_to = getQueryParam('return_to', 'pebblejs://close#');
+        //alert(return_to);
+        //alert(window.location.hash);
+        //alert(decodeURIComponent(window.location.hash.substr(1, window.location.hash.length)));
+        //alert(window.location.href);
+        window.onload = function () {
+            var urlObj = parseURL(window.location.href);
+            document.getElementById("Accou" + "ntTok" + "en").innerHTML = urlObj.params["at"];
+            //document.getElementById("lists").innerHTML = urlObj.params["lists"];
+            var cfgJson = JSON.parse(decodeURIComponent(urlObj.hash));
+            //alert(cfgJson.listsa);
+            var lists;
+            if (undefined == cfgJson.lists || null == cfgJson.lists) {
+                listJson = DefaultLists;
+            }
+            else {
+                listJson = JSON.parse(cfgJson.lists);
+            }
+
+            document.getElementById("lists").value = decodeURIComponent(JSON.stringify(listJson));
+        }
+    </script>
+</head>
+<body>
+    AccountToken:<span id="AccountToken"></span><br /><br />
+    configurations:<br />
+    <textarea id="lists" style="width: 100%; height: 300px"></textarea><br /><br />
+    <button onclick="javascript:fillData()">fill test value</button><br /><br />
+    <button onclick="javascript:saveData()">save</button>
+
+</body>
+</html>
